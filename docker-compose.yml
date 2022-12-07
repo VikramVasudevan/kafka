@@ -57,6 +57,14 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "3"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "3"
       CONNECT_CONFLUENT_TOPIC_REPLICATION_FACTOR: "3"
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
   vikram-kafka-consumer:
     image: vikramvasudevan/kafka-consumer:latest
     depends_on:
@@ -64,6 +72,7 @@ services:
       - kafka
       - kafka2
       - kafka3
+      - mssql
 volumes:
   kafkavolume01: {}
 networks:
